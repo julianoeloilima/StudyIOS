@@ -10,10 +10,10 @@ import Foundation
 
 struct CalculatorManager {
     
-    private var symbolOperation : String?
+    private var symbolOperation : String? = nil
     private var n1: Double = 0.0
-    private var n2: Double?
-    private var res : Double?
+    private var n2: Double? = nil
+    private var res : Double? = nil
     
     enum Operation {
         case UnaryOperation((Double) -> Double)
@@ -57,6 +57,10 @@ struct CalculatorManager {
         guard let symbol = self.symbolOperation else { return }
         guard let operation : Operation  = operations[symbol] else { return }
         
+        if res != nil {
+            n1 = res!
+        }
+        
         switch operation {
         case Operation.UnaryOperation(let op):
             res = op(self.n1)
@@ -67,42 +71,18 @@ struct CalculatorManager {
         default:
             break
         }
-        
-        /*
-        switch operation {
-        case "+":
-            result = Double(firstNumber)! + Double(secondNumber)!
-            break;
-        case "-":
-            result = Double(firstNumber)! - Double(secondNumber)!
-            break;
-        case "x":
-            result = Double(firstNumber)! * Double(secondNumber)!
-            break;
-        case "÷":
-            result = Double(firstNumber)! / Double(secondNumber)!
-            break;
-        case "√":
-            result = sqrt(Double(firstNumber)!)
-            break;
-        case "%":
-            if (secondNumber.count > 0) {
-                result = Double(firstNumber)! * Double(secondNumber)! / 100.0
-            }
-            else {
-                result = Double(firstNumber)! / 100.0
-            }
-            break;
-        default:
-            break
-        }
-         */
     }
     
     
     mutating func setFirstNumber(_ number : Double) {
         self.n1 = number
+        self.n2 = nil
+        self.symbolOperation = nil
     }
+
+    //Float.ulpOfOne
+    //Double.ulpOfOne
+    // Menor valor possível de um número
 
     mutating func setSecondNumber(_ number : Double) {
         self.n2 = number
@@ -111,4 +91,29 @@ struct CalculatorManager {
     mutating func setSymbolOperation(_ symbol : String) {
         self.symbolOperation = symbol
     }
+    
+    mutating func clean() {
+        if (res != nil) {
+            cleanAll()
+        }
+        else if (n2 != nil) {
+            n2 = nil
+            res = nil
+        }
+        else {
+            cleanAll()
+        }
+    }
+
+    private mutating func cleanAll() {
+        n1 = 0.0
+        n2 = nil
+        symbolOperation = nil
+        res = nil
+    }
+    
+    var isCleanAC : Bool {
+        return symbolOperation != nil
+    }
+
 }

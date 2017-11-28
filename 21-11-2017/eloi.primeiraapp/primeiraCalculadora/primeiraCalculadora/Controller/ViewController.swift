@@ -17,11 +17,12 @@ class ViewController: UIViewController {
     var manager = CalculatorManager()
     
     @IBAction func clickExecuteCalc(_ sender: UIButton) {
-        executeCalc();
+        executeCalc()
     }
     
     @IBAction func clickPercent(_ sender: UIButton) {
-        operation = "%"
+        manager.setSymbolOperation("%")
+ //       operation = "%"
         executeCalc()
     }
     
@@ -83,7 +84,7 @@ class ViewController: UIViewController {
 
     var firstNumber : String = "0";
     var secondNumber : String = "";
-    var operation : String = "";
+    //var operation : String = "";
     var resultCalc : String = "";
 
     func writeNumber(_ digito : String) {
@@ -97,6 +98,7 @@ class ViewController: UIViewController {
             else {
                 firstNumber += digito
             }
+            manager.setFirstNumber(Double(firstNumber)!)
         }
         else {
             if (secondNumber.elementsEqual("0") && (!digito.elementsEqual("0"))) {
@@ -109,12 +111,14 @@ class ViewController: UIViewController {
                 secondNumber += digito
                 btnClean.setTitle("C", for: UIControlState.normal)
             }
+            manager.setSecondNumber(Double(secondNumber)!)
         }
         showCalc()
     }
 
     func verifyClean() {
-        if (resultCalc.count > 0) {
+        //if (resultCalc.count > 0) {
+        if manager.result != nil {
             clean()
         }
     }
@@ -189,7 +193,7 @@ class ViewController: UIViewController {
 
     func showCalc() {
         if (resultCalc.count == 0) {
-            labelResultado.text = "\(firstNumber) \(operation) \(secondNumber)"
+            labelResultado.text = "\(firstNumber) \(manager.) \(secondNumber)"
         }
         else {
             labelResultado.text = "\(firstNumber) \(operation) \(secondNumber) = \(resultCalc)"
@@ -197,11 +201,17 @@ class ViewController: UIViewController {
     }
     
     func executeCalc() {
-        if (resultCalc.count > 0) {
-            firstNumber = resultCalc
-        }
+//        if (resultCalc.count > 0) {
+//            firstNumber = resultCalc
+//        }
         
+
+        manager.performOperation()
+        
+        /*
         var result : Double? = nil
+        
+        
         
         switch operation {
         case "+":
@@ -231,8 +241,9 @@ class ViewController: UIViewController {
             break
         }
         
-
-        if let value = result {
+        */
+        
+        if let value = manager.result {
             let strVal = "\(value)"
             if (strVal.hasSuffix(".0")) {
                 resultCalc = removeTwoLastCharacters(strVal)
@@ -245,24 +256,12 @@ class ViewController: UIViewController {
     }
 
     func clean() {
-        if (resultCalc.count > 0) {
-            firstNumber = "0";
-            secondNumber = "";
-            operation = "";
-            resultCalc = "";
+        manager.clean();
+        if manager.isCleanAC {
             btnClean.setTitle("AC", for: UIControlState.normal)
-        }
-        else if (secondNumber.count > 0) {
-            secondNumber = "";
-            resultCalc = "";
-            btnClean.setTitle("C", for: UIControlState.normal)
         }
         else {
-            firstNumber = "0";
-            secondNumber = "";
-            operation = "";
-            resultCalc = "";
-            btnClean.setTitle("AC", for: UIControlState.normal)
+            btnClean.setTitle("C", for: UIControlState.normal)
         }
     }
 
