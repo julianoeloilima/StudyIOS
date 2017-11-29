@@ -102,7 +102,7 @@
 				TargetAttributes = {
 					52D603F01E24197300B66BB3 = {
 						CreatedOnToolsVersion = 8.1;
-						DevelopmentTeam = 593ZXM85A3;
+						DevelopmentTeam = H37976G458;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -269,10 +269,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 593ZXM85A3;
+				DEVELOPMENT_TEAM = H37976G458;
 				INFOPLIST_FILE = Foody/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = co.ductran.Foody;
+				PRODUCT_BUNDLE_IDENTIFIER = co.ductran.Foody.eloi;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
@@ -282,10 +283,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 593ZXM85A3;
+				DEVELOPMENT_TEAM = H37976G458;
 				INFOPLIST_FILE = Foody/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = co.ductran.Foody;
+				PRODUCT_BUNDLE_IDENTIFIER = co.ductran.Foody.eloi;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
@@ -310,6 +312,7 @@
 				52D604051E24197300B66BB3 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
