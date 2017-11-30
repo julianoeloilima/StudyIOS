@@ -34,8 +34,9 @@ class TableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        if indexPath.row % 2 == 0 {
+/*
+        let index = indexPath.row % 3
+        if index == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "iconCell", for: indexPath)
             
             guard let content = self.dataIcon[indexPath.section]?[indexPath.row] else  {
@@ -53,22 +54,35 @@ class TableViewController: UITableViewController {
             }
             return cell
         }
+        else if index == 1 {
+ */
+            let cell : TableViewCell = tableView.dequeueReusableCell(withIdentifier: "customCell", for: indexPath) as! TableViewCell
+            
+            guard let content = self.dataImages[indexPath.section]?[indexPath.row] else  {
+                return tableView.dequeueReusableCell(withIdentifier: "placeHolder", for: indexPath)
+            }
+            cell.lblTitle.text = content.name
+            cell.lblDetail.text = content.description
+            cell.imgView.downloadImageAsync(url: URL(string: content.link)!)
+            
+            return cell
+/*
+        }
         else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "imageCell", for: indexPath)
             
             guard let content = self.dataImages[indexPath.section]?[indexPath.row] else  {
                 return tableView.dequeueReusableCell(withIdentifier: "placeHolder", for: indexPath)
             }
-            
             cell.textLabel?.text = content.name
             cell.detailTextLabel?.text = content.description
-            cell.imageView?.downloadImage(url: URL(string: content.link)!)
+            cell.imageView?.downloadImageAsync(url: URL(string: content.link)!)
 
             return cell
         }
         
         
-
+*/
         
     }
 
