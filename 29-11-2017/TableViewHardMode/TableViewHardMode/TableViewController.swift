@@ -62,7 +62,7 @@ class TableViewController: UITableViewController {
             
             cell.textLabel?.text = content.name
             cell.detailTextLabel?.text = content.description
-            cell.imageView?.downloadImage(url: URL(fileURLWithPath: content.link))
+            cell.imageView?.downloadImage(url: URL(string: content.link)!)
 
             return cell
         }
