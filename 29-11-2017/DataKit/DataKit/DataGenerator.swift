@@ -31,8 +31,7 @@ public func generateImages(_ maxSection : Int, _ maxRow : Int) -> [Int : [Networ
     for i in 0 ..< maxSection {
         var imgs = [NetworkImage]()
         for _ in 0..<maxRow {
-            let imgURL = randomImageUrl()
-            let icon = NetworkImage(name: imgURL, link: imgURL, description: imgURL)
+            let icon = NetworkImage(name: randomIconName(), link: randomImageUrl(), description: randomDilmaDescription())
             imgs.append(icon)
         }
         dict[i] = imgs
@@ -110,7 +109,35 @@ extension UIImageView {
         guard let data = try? Data(contentsOf : url) else { return }
         self.image = UIImage(data : data)
     }
-    
+
+    public func downloadImageAsync(url: URL) {
+        URLSession.shared.dataTask(with: url, completionHandler: { [weak self]
+            (data, response, error) in
+
+            //if error != nil {
+            //    print(error ?? "Erro ao realizar o download da imagem: \(url).")
+            //    return
+            //}
+            
+            guard error != nil else {
+                print(error ?? "Erro ao realizar o download da imagem: \(url).")
+                return
+            }
+            
+            DispatchQueue.main.async { [weak self] in
+                let image = UIImage(data: data!)
+                self?.image = image
+            }
+        }).resume()
+        
+        
+        
+        
+        
+        guard let data = try? Data(contentsOf : url) else { return }
+        self.image = UIImage(data : data)
+    }
+
 }
 
 public func normalizedRandom() -> Double {
