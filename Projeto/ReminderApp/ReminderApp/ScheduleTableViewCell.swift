@@ -38,6 +38,10 @@ class ScheduleTableViewCell: UITableViewCell {
         let longGesture = UILongPressGestureRecognizer(target: self, action: #selector(ScheduleTableViewCell.cellLongPressGestureRecognizer(_:)))
         longGesture.minimumPressDuration = 1
         self.addGestureRecognizer(longGesture)
+
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(ScheduleTableViewCell.cellTapGestureRecognizer(_:)))
+        self.addGestureRecognizer(tapGesture)
+
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -56,11 +60,17 @@ class ScheduleTableViewCell: UITableViewCell {
     @objc func cellLongPressGestureRecognizer(_ sender: UILongPressGestureRecognizer) {
         delegate?.willDidCellLongPressGesture(cell : self, objectIndex: selectedIndexObject)
     }
+
+    @objc func cellTapGestureRecognizer(_ sender: UITapGestureRecognizer) {
+        delegate?.willDidCellTapGesture(cell : self, objectIndex: selectedIndexObject)
+    }
+
 }
 
 
 protocol ScheduleTableCellGestures {
     
+    func willDidCellTapGesture(cell : ScheduleTableViewCell, objectIndex : Int?)
     func willDidCellLeftSwipeGesture(cell : ScheduleTableViewCell, objectIndex : Int?)
     func willDidCellRightSwipeGesture(cell : ScheduleTableViewCell, objectIndex : Int?)
     func willDidCellLongPressGesture(cell : ScheduleTableViewCell, objectIndex : Int?)

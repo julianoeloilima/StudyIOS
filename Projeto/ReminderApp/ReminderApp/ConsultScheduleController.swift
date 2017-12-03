@@ -28,19 +28,31 @@ class ConsultScheduleController: UIViewController, UITableViewDelegate, UITableV
         self.tableSchedulers.delegate = self
         self.tableSchedulers.dataSource = self
         self.searchBar.delegate = self
-        self.tableSchedulers.setEditing(true, animated: true)
+//        self.tableSchedulers.setEditing(true, animated: true)
     }
-
+    
     override func viewWillAppear(_ animated: Bool) {
         DB.scheduleEditing = nil
         self.schedulers = DB.getAllSchedules()
         self.tableSchedulers.reloadData()
     }
-    
-    func willDidCellLeftSwipeGesture(cell : ScheduleTableViewCell, objectIndex: Int?) {
+
+    func willDidCellTapGesture(cell : ScheduleTableViewCell, objectIndex: Int?) {
         DB.scheduleEditing = self.schedulers[objectIndex!]
-        showMsg(title: "Ação", msg: "Editar left \(DB.scheduleEditing!.description)")
+        self.tabBarController?.selectedIndex = 1
     }
+    
+
+    func willDidCellLeftSwipeGesture(cell : ScheduleTableViewCell, objectIndex: Int?) {
+        showMsgYesNo(title: "Confirme", msg: "Excluir o lembrete?", yesHandler: ({
+            let schedule = self.schedulers[objectIndex!]
+            DB.removeSchedule(id: schedule.id)
+            self.schedulers.remove(at: objectIndex!)
+            self.tableSchedulers.reloadData()
+            self.showMsg(title: "Sucesso", msg: "Lembrete \(schedule.description) excluído.")
+        }))
+    }
+
     
     func willDidCellRightSwipeGesture(cell : ScheduleTableViewCell, objectIndex: Int?) {
         let schedule = schedulers[objectIndex!]
@@ -141,16 +153,17 @@ class ConsultScheduleController: UIViewController, UITableViewDelegate, UITableV
         }
     }
     
-    
+    /*
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             let schedule = schedulers[indexPath.row]
             DB.removeSchedule(id: schedule.id)
             schedulers.remove(at: indexPath.row)
             self.tableSchedulers.reloadData()
+            showMsg(title: "Sucesso", msg: "Lembrete \(schedule.description) excluído.")
         }
     }
-
+*/
     
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {

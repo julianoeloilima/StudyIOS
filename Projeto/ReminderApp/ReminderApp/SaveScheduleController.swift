@@ -9,7 +9,7 @@
 import UIKit
 
 class SaveScheduleController: UIViewController,
-    UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate {
+    UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate, UIGestureRecognizerDelegate {
 
     @IBOutlet weak var txfDescription: UITextField!
     @IBOutlet weak var dtpDateTime: UIDatePicker!
@@ -23,7 +23,21 @@ class SaveScheduleController: UIViewController,
         super.viewDidLoad()
         self.pkvRepeat.delegate = self
         self.pkvRepeat.dataSource = self
+        
+        self.view.isUserInteractionEnabled = true
+        self.view.isMultipleTouchEnabled = true
+        
+        let rightSwipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(SaveScheduleController.rightSwipeGestureRecognizer(_:)))
+        rightSwipeGesture.delegate = self
+        rightSwipeGesture.direction = UISwipeGestureRecognizerDirection.right
+        self.view.addGestureRecognizer(rightSwipeGesture)
     }
+    
+    @objc func rightSwipeGestureRecognizer(_ sender: UISwipeGestureRecognizer) {
+        DB.scheduleEditing = nil
+        self.tabBarController?.selectedIndex = 0
+    }
+
     
     override func viewWillAppear(_ animated: Bool) {
         if let scEdit = DB.scheduleEditing {
@@ -39,6 +53,14 @@ class SaveScheduleController: UIViewController,
             else {
                 scSituacao.selectedSegmentIndex = 1
             }
+        }
+        else {
+            txfDescription.text = ""
+            dtpDateTime.date = Date()
+            swtActive.isOn = true
+            selectionRepeat = RepeatSchedule.Never
+            pkvRepeat.selectRow(RepeatSchedule.getIndex(selectionRepeat), inComponent: 0, animated: false)
+            scSituacao.selectedSegmentIndex = 0
         }
     }
 
@@ -93,6 +115,8 @@ class SaveScheduleController: UIViewController,
                 DB.updateSchedule(schedule: scEdit)
                 showMsg(title: "Sucesso", msg: "Lembrete \(scEdit.description) atualizado.")
                 DB.scheduleEditing = nil
+                self.tabBarController?.selectedIndex = 0
+
             }
             else {
                 let situation : Situation

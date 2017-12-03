@@ -68,7 +68,7 @@ public class DB {
     public static func filterSchedules(description : String) -> [Schedule] {
         var newItems = [Schedule]()
         for item in schedules.enumerated() {
-            if item.element.description.contains(description) {
+            if item.element.description.uppercased().contains(description.uppercased()) {
                 newItems.append(item.element.copy())
             }
         }
