@@ -27,7 +27,7 @@ public enum RepeatSchedule {
     
     static func getDescription(index : Int) -> String? {
         switch index {
-        case 0: return "Nunca"
+        case 0: return "Única vez"
         case 1: return "Todo dia"
         case 2: return "Toda semana"
         case 3: return "Todo mês"
@@ -82,18 +82,34 @@ public class Schedule {
         self.init(id: 0, description: description, dateTime: dateTime, active: active, repeatSchedule: repeatSchedule, situation: situation)
     }
 
+    //the "M/d/yy, H:mm" is put together from the Symbol Table
+
+    
     var repeatDescription : String {
+        let dateFormatter = DateFormatter()
         switch self.repeatSchedule {
         case .EveryDay:
-            return "Todos os dias às \(self.dateTime)"
+            dateFormatter.dateFormat = "H:mm"
+            let strDate = dateFormatter.string(from: self.dateTime)
+            return "Todos os dias às \(strDate)"
         case .EveryWeek:
-            return "Durante a semana \(self.dateTime) às \(self.dateTime)"
+            dateFormatter.dateFormat = "H:mm"
+            let strDate = dateFormatter.string(from: self.dateTime)
+            return "De segunda a sexta às \(strDate)"
         case .EveryMonth:
-            return "Todo dia \(self.dateTime) às \(self.dateTime)"
+            dateFormatter.dateFormat = "d"
+            let strDay = dateFormatter.string(from: self.dateTime)
+            dateFormatter.dateFormat = "H:mm"
+            let strHour = dateFormatter.string(from: self.dateTime)
+            return "Todo dia \(strDay) às \(strHour)"
         case .EveryYear:
-            return "Todo ano em \(self.dateTime)"
+            dateFormatter.dateFormat = "M/d H:mm"
+            let strDate = dateFormatter.string(from: self.dateTime)
+            return "Todo ano em \(strDate)"
         default:
-            return "Uma única vez"
+            dateFormatter.dateFormat = "M/d/yy, H:mm"
+            let strDate = dateFormatter.string(from: self.dateTime)
+            return "Uma vez em \(strDate)"
         }
     }
     

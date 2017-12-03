@@ -15,6 +15,7 @@ class SaveScheduleController: UIViewController,
     @IBOutlet weak var dtpDateTime: UIDatePicker!
     @IBOutlet weak var swtActive: UISwitch!
     @IBOutlet weak var pkvRepeat: UIPickerView!
+    @IBOutlet weak var scSituacao: UISegmentedControl!
     @IBOutlet weak var btnSave: UIButton!
     
     // PICKERVIEW
@@ -52,24 +53,52 @@ class SaveScheduleController: UIViewController,
     
     
     @IBAction func btnSaveClick(_ sender: UIButton) {
-        if txfDescription.text != nil {
+        if txfDescription.text != nil && txfDescription.text != "" {
             if let scEdit = DB.scheduleEditing {
                 scEdit.description = txfDescription.text!
                 scEdit.dateTime = dtpDateTime.date
                 scEdit.active = swtActive.isOn
                 scEdit.repeatSchedule = selectionRepeat
+                
+                if scSituacao.selectedSegmentIndex == 0 {
+                    scEdit.situation = Situation.Pending
+                }
+                else {
+                    scEdit.situation = Situation.Done
+                }
+                
                 DB.updateSchedule(schedule: scEdit)
-                showMsg(title: "Sucesso", msg: "Lembrete atualizado.")
+                showMsg(title: "Sucesso", msg: "Lembrete \(scEdit.description) atualizado.")
                 DB.scheduleEditing = nil
             }
             else {
-                let schedule = Schedule(description: txfDescription.text!, dateTime: dtpDateTime.date, active: swtActive.isOn, repeatSchedule: selectionRepeat, situation : Situation.Pending)
+                let situation : Situation
+                if scSituacao.selectedSegmentIndex == 0 {
+                    situation = Situation.Pending
+                }
+                else {
+                    situation = Situation.Done
+                }
+
+                let schedule = Schedule(description: txfDescription.text!, dateTime: dtpDateTime.date, active: swtActive.isOn, repeatSchedule: selectionRepeat, situation : situation)
                 DB.addSchedule(item: schedule)
-                showMsg(title: "Sucesso", msg: "Lembrete criado.")
+                
+                showMsg(title: "Sucesso", msg: "Lembrete \(schedule.description) criado.", okHandler: ({
+                    self.txfDescription.text = ""
+                    self.dtpDateTime.date = Date()
+                    self.swtActive.isOn = true
+                    self.selectionRepeat = RepeatSchedule.Never
+                    self.pkvRepeat.selectRow(RepeatSchedule.getIndex(self.selectionRepeat), inComponent: 0, animated: false)
+                    self.scSituacao.selectedSegmentIndex = 0
+                    self.txfDescription.becomeFirstResponder()
+                }))
             }
         }
         else {
-            showMsg(title: "Atenção", msg: "Informe a descrição.")
+            showMsg(title: "Atenção", msg: "Informe a descrição.", okHandler: ({
+                self.txfDescription.becomeFirstResponder()
+            }))
+            
         }
     }
 
@@ -85,7 +114,14 @@ class SaveScheduleController: UIViewController,
             dtpDateTime.date = scEdit.dateTime
             swtActive.isOn = scEdit.active
             selectionRepeat = scEdit.repeatSchedule
-            pkvRepeat.selectRow(RepeatSchedule.getIndex(selectionRepeat), inComponent: 0, animated: false)
+        pkvRepeat.selectRow(RepeatSchedule.getIndex(selectionRepeat), inComponent: 0, animated: false)
+            
+            if scEdit.situation == Situation.Pending {
+                scSituacao.selectedSegmentIndex = 0
+            }
+            else {
+                scSituacao.selectedSegmentIndex = 1
+            }
         }
     }
 
@@ -100,6 +136,16 @@ class SaveScheduleController: UIViewController,
         let alert = UIAlertController(title: title, message: msg, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .`default`, handler: { _ in
             NSLog("The \"OK\" alert occured.")
+        }))
+        self.present(alert, animated: true, completion: nil)
+    }
+
+    func showMsg(title : String, msg : String, okHandler : @escaping () -> ())
+    {
+        
+        let alert = UIAlertController(title: title, message: msg, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .`default`, handler: { _ in
+            okHandler()
         }))
         self.present(alert, animated: true, completion: nil)
     }

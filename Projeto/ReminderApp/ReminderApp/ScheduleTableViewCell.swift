@@ -16,6 +16,8 @@ class ScheduleTableViewCell: UITableViewCell {
     @IBOutlet weak var lblPeriodSchedule: UILabel!
     @IBOutlet weak var lblActive: UILabel!
     
+    @IBOutlet weak var swActive: UISwitch!
+    
     var delegate: ScheduleTableCellGestures?
     var selectedIndexObject: Int?
     
@@ -54,7 +56,6 @@ class ScheduleTableViewCell: UITableViewCell {
     @objc func cellLongPressGestureRecognizer(_ sender: UILongPressGestureRecognizer) {
         delegate?.willDidCellLongPressGesture(cell : self, objectIndex: selectedIndexObject)
     }
-
 }
 
 

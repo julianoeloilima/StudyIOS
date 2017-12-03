@@ -12,9 +12,9 @@ class ConsultScheduleController: UIViewController, UITableViewDelegate, UITableV
     
     func willDidCellLeftSwipeGesture(cell : ScheduleTableViewCell, objectIndex: Int?) {
         DB.scheduleEditing = self.schedulers[objectIndex!]
-//        self.selectedViewController = self.viewControllers?[1]
+        showMsg(title: "Ação", msg: "Editar left \(DB.scheduleEditing!.description)")
     }
-
+    
     func willDidCellRightSwipeGesture(cell : ScheduleTableViewCell, objectIndex: Int?) {
         let schedule = schedulers[objectIndex!]
         let titleMsg : String
@@ -106,16 +106,16 @@ class ConsultScheduleController: UIViewController, UITableViewDelegate, UITableV
     
     private func setCellInfo(cell : ScheduleTableViewCell, item : Schedule) {
         cell.lblDescriptionSchedule.text = item.description
-        cell.lblActive.text = item.active ? "Ativo: Sim" : "Ativo: Não"
+        cell.swActive.isOn = item.active
         cell.lblPeriodSchedule.text = item.repeatDescription
         if Situation.Done == item.situation {
-            cell.imgSchedule.image = #imageLiteral(resourceName: "Selected").withRenderingMode(.alwaysTemplate)
-            cell.imgSchedule.tintColor = UIColor.blue
+            cell.imgSchedule.image = #imageLiteral(resourceName: "done") //.withRenderingMode(.alwaysTemplate)
+//            cell.imgSchedule.tintColor = UIColor.blue
             
         }
         else {
-            cell.imgSchedule.image = #imageLiteral(resourceName: "Location").withRenderingMode(.alwaysTemplate)
-            cell.imgSchedule.tintColor = UIColor.red
+            cell.imgSchedule.image = #imageLiteral(resourceName: "warning") //.withRenderingMode(.alwaysTemplate)
+//            cell.imgSchedule.tintColor = UIColor.red
         }
     }
     
