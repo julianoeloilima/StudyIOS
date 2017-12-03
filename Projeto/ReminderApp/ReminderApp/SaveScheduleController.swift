@@ -18,6 +18,31 @@ class SaveScheduleController: UIViewController,
     @IBOutlet weak var scSituacao: UISegmentedControl!
     @IBOutlet weak var btnSave: UIButton!
     
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.pkvRepeat.delegate = self
+        self.pkvRepeat.dataSource = self
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        if let scEdit = DB.scheduleEditing {
+            txfDescription.text = scEdit.description
+            dtpDateTime.date = scEdit.dateTime
+            swtActive.isOn = scEdit.active
+            selectionRepeat = scEdit.repeatSchedule
+            pkvRepeat.selectRow(RepeatSchedule.getIndex(selectionRepeat), inComponent: 0, animated: false)
+            
+            if scEdit.situation == Situation.Pending {
+                scSituacao.selectedSegmentIndex = 0
+            }
+            else {
+                scSituacao.selectedSegmentIndex = 1
+            }
+        }
+    }
+
+    
     // PICKERVIEW
     
     var selectionRepeat : RepeatSchedule = RepeatSchedule.Never
@@ -41,9 +66,7 @@ class SaveScheduleController: UIViewController,
     // FIM DO PICKERVIEW
 
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        
         self.view.endEditing(true)
-        
         return true
         
     }
@@ -98,41 +121,11 @@ class SaveScheduleController: UIViewController,
             showMsg(title: "Atenção", msg: "Informe a descrição.", okHandler: ({
                 self.txfDescription.becomeFirstResponder()
             }))
-            
         }
     }
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        self.pkvRepeat.delegate = self
-        self.pkvRepeat.dataSource = self
-    }
-
-    override func viewWillAppear(_ animated: Bool) {
-        if let scEdit = DB.scheduleEditing {
-            txfDescription.text = scEdit.description
-            dtpDateTime.date = scEdit.dateTime
-            swtActive.isOn = scEdit.active
-            selectionRepeat = scEdit.repeatSchedule
-        pkvRepeat.selectRow(RepeatSchedule.getIndex(selectionRepeat), inComponent: 0, animated: false)
-            
-            if scEdit.situation == Situation.Pending {
-                scSituacao.selectedSegmentIndex = 0
-            }
-            else {
-                scSituacao.selectedSegmentIndex = 1
-            }
-        }
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-    }
-    
     
     func showMsg(title : String, msg : String)
     {
-        
         let alert = UIAlertController(title: title, message: msg, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .`default`, handler: { _ in
             NSLog("The \"OK\" alert occured.")
@@ -149,8 +142,4 @@ class SaveScheduleController: UIViewController,
         }))
         self.present(alert, animated: true, completion: nil)
     }
-
-    
-
-
 }

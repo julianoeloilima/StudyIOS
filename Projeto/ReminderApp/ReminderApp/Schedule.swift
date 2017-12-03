@@ -29,7 +29,7 @@ public enum RepeatSchedule {
         switch index {
         case 0: return "Única vez"
         case 1: return "Todo dia"
-        case 2: return "Toda semana"
+        case 2: return "De segunda à sexta"
         case 3: return "Todo mês"
         case 4: return "Todo ano"
         default:
@@ -103,13 +103,17 @@ public class Schedule {
             let strHour = dateFormatter.string(from: self.dateTime)
             return "Todo dia \(strDay) às \(strHour)"
         case .EveryYear:
-            dateFormatter.dateFormat = "M/d H:mm"
+            dateFormatter.dateFormat = "d/M"
             let strDate = dateFormatter.string(from: self.dateTime)
-            return "Todo ano em \(strDate)"
+            dateFormatter.dateFormat = "H:mm"
+            let strHour = dateFormatter.string(from: self.dateTime)
+            return "Todo ano em \(strDate) às \(strHour)"
         default:
-            dateFormatter.dateFormat = "M/d/yy, H:mm"
+            dateFormatter.dateFormat = "d/M/yy"
             let strDate = dateFormatter.string(from: self.dateTime)
-            return "Uma vez em \(strDate)"
+            dateFormatter.dateFormat = "H:mm"
+            let strHour = dateFormatter.string(from: self.dateTime)
+            return "Uma vez em \(strDate) às \(strHour)"
         }
     }
     

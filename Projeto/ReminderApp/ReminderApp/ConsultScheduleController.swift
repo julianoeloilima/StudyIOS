@@ -9,6 +9,33 @@
 import UIKit
 
 class ConsultScheduleController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, ScheduleTableCellGestures {
+
+    var schedulers = [Schedule]()
+    
+    @IBOutlet weak var tableSchedulers: UITableView!
+    @IBOutlet weak var searchBar: UISearchBar!
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        DB.addSchedule(item: Schedule(description: "Almoçar", dateTime: Date(), active: true, repeatSchedule: RepeatSchedule.EveryDay, situation: Situation.Pending))
+        
+        DB.addSchedule(item: Schedule(description: "Pagar conta", dateTime: Date(), active: true, repeatSchedule: RepeatSchedule.EveryMonth, situation: Situation.Pending))
+        
+        DB.addSchedule(item: Schedule(description: "Presente de aniversário", dateTime: Date(), active: false, repeatSchedule: RepeatSchedule.EveryYear, situation: Situation.Done))
+        
+        
+        self.tableSchedulers.delegate = self
+        self.tableSchedulers.dataSource = self
+        self.searchBar.delegate = self
+        self.tableSchedulers.setEditing(true, animated: true)
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        DB.scheduleEditing = nil
+        self.schedulers = DB.getAllSchedules()
+        self.tableSchedulers.reloadData()
+    }
     
     func willDidCellLeftSwipeGesture(cell : ScheduleTableViewCell, objectIndex: Int?) {
         DB.scheduleEditing = self.schedulers[objectIndex!]
@@ -91,8 +118,6 @@ class ConsultScheduleController: UIViewController, UITableViewDelegate, UITableV
         return schedulers.count
     }
     
-    @IBOutlet weak var searchBar: UISearchBar!
-    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(
@@ -109,32 +134,13 @@ class ConsultScheduleController: UIViewController, UITableViewDelegate, UITableV
         cell.swActive.isOn = item.active
         cell.lblPeriodSchedule.text = item.repeatDescription
         if Situation.Done == item.situation {
-            cell.imgSchedule.image = #imageLiteral(resourceName: "done") //.withRenderingMode(.alwaysTemplate)
-//            cell.imgSchedule.tintColor = UIColor.blue
-            
+            cell.imgSchedule.image = #imageLiteral(resourceName: "done")
         }
         else {
-            cell.imgSchedule.image = #imageLiteral(resourceName: "warning") //.withRenderingMode(.alwaysTemplate)
-//            cell.imgSchedule.tintColor = UIColor.red
+            cell.imgSchedule.image = #imageLiteral(resourceName: "warning")
         }
     }
     
-    var schedulers = [Schedule]()
-    
-    @IBOutlet weak var tableSchedulers: UITableView!
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        DB.addSchedule(item: Schedule(description: "Tomar remédio", dateTime: Date(), active: true, repeatSchedule: RepeatSchedule.EveryYear, situation: Situation.Done))
-        DB.addSchedule(item: Schedule(description: "Tomar água", dateTime: Date(), active: true, repeatSchedule: RepeatSchedule.EveryMonth, situation: Situation.Pending))
-        DB.addSchedule(item: Schedule(description: "Almoçar", dateTime: Date(), active: false, repeatSchedule: RepeatSchedule.EveryDay, situation: Situation.Done))
-
-        self.tableSchedulers.delegate = self
-        self.tableSchedulers.dataSource = self
-        self.searchBar.delegate = self
-        self.tableSchedulers.setEditing(true, animated: true)
-    }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
@@ -145,15 +151,6 @@ class ConsultScheduleController: UIViewController, UITableViewDelegate, UITableV
         }
     }
 
-    override func viewWillAppear(_ animated: Bool) {
-        DB.scheduleEditing = nil
-        self.schedulers = DB.getAllSchedules()
-        self.tableSchedulers.reloadData()
-    }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-    }
     
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
