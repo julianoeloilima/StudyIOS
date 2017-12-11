@@ -33,6 +33,10 @@ class TableViewController: UITableViewController {
         return self.dataIcon[section]?.count ?? 0
     }
 
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 154
+    }
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 /*
         let index = indexPath.row % 3
@@ -56,18 +60,23 @@ class TableViewController: UITableViewController {
         }
         else if index == 1 {
  */
-            let cell : TableViewCell = tableView.dequeueReusableCell(withIdentifier: "customCell", for: indexPath) as! TableViewCell
-            
-            guard let content = self.dataImages[indexPath.section]?[indexPath.row] else  {
-                return tableView.dequeueReusableCell(withIdentifier: "placeHolder", for: indexPath)
-            }
-            cell.lblTitle.text = content.name
-            cell.lblDetail.text = content.description
-            cell.imgView.downloadImageAsync(url: URL(string: content.link)!)
+            let cell : TableViewCell = tableView.dequeueReusableCell(withIdentifier: "teste2", for: indexPath) as! TableViewCell
+
+            let content = self.dataImages[indexPath.section]![indexPath.row]
+
+        
+//            guard let content = self.dataImages[indexPath.section]?[indexPath.row] else  {
+//                return tableView.dequeueReusableCell(withIdentifier: "placeHolder", for: indexPath)
+//            }
+            //cell.lblTitle.text = content.name
+            //cell.lblDetail.text = content.description
+            cell.img.downloadImageAsync(url: URL(string: content.link)!)
             
             return cell
 /*
         }
+         
+    
         else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "imageCell", for: indexPath)
             

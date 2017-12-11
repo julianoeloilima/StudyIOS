@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Table View Controller-->
+        <scene sceneID="jaQ-TY-hCu">
+            <objects>
+                <tableViewController id="GdF-UY-XXI" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="FeX-qe-Ce4">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="128" id="wF4-mg-V4U">
+                                <rect key="frame" x="0.0" y="28" width="375" height="128"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="wF4-mg-V4U" id="13k-rD-Szp">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="127.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="AirPlay Icon" translatesAutoresizingMaskIntoConstraints="NO" id="Szc-lE-btX">
+                                            <rect key="frame" x="14" y="14" width="100" height="100"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="100" id="Rjy-DA-R5E"/>
+                                                <constraint firstAttribute="width" constant="100" id="r3O-Kc-vTH"/>
+                                            </constraints>
+                                        </imageView>
+                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="GWi-TM-Fpf">
+                                            <rect key="frame" x="128" y="14" width="231" height="100"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Titulo" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GYa-mW-0v6">
+                                                    <rect key="frame" x="0.0" y="0.0" width="231" height="79.5"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Detalhe" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="k0O-rX-8D0">
+                                                    <rect key="frame" x="0.0" y="79.5" width="231" height="20.5"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </stackView>
+                                    </subviews>
+                                    <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <constraints>
+                                        <constraint firstAttribute="trailing" secondItem="GWi-TM-Fpf" secondAttribute="trailing" constant="16" id="0dQ-PD-4tS"/>
+                                        <constraint firstItem="GWi-TM-Fpf" firstAttribute="top" secondItem="13k-rD-Szp" secondAttribute="top" constant="14" id="3pL-MO-Uhg"/>
+                                        <constraint firstItem="Szc-lE-btX" firstAttribute="top" secondItem="13k-rD-Szp" secondAttribute="top" constant="14" id="L1G-Vd-Z6g"/>
+                                        <constraint firstAttribute="bottom" secondItem="GWi-TM-Fpf" secondAttribute="bottom" constant="14" id="Tud-3q-AnA"/>
+                                        <constraint firstItem="Szc-lE-btX" firstAttribute="leading" secondItem="13k-rD-Szp" secondAttribute="leading" constant="14" id="ZQ0-Oz-HPK"/>
+                                        <constraint firstAttribute="bottom" secondItem="Szc-lE-btX" secondAttribute="bottom" constant="14" id="gIL-Ni-Hcr"/>
+                                        <constraint firstItem="GWi-TM-Fpf" firstAttribute="leading" secondItem="Szc-lE-btX" secondAttribute="trailing" constant="14" id="x2g-YI-ls2"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="GdF-UY-XXI" id="o2d-9Z-vHH"/>
+                            <outlet property="delegate" destination="GdF-UY-XXI" id="t6T-er-COG"/>
+                        </connections>
+                    </tableView>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="2Hs-0E-q2l" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="50.399999999999999" y="-165.06746626686657"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="AirPlay Icon" width="22" height="18"/>
+    </resources>
+</document>

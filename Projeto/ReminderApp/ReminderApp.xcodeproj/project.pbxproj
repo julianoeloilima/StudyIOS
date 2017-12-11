@@ -17,6 +17,12 @@
 		255BD3511FD1F36B00ACE899 /* ScheduleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 255BD3501FD1F36B00ACE899 /* ScheduleTableViewCell.swift */; };
 		255BD3531FD1FC7700ACE899 /* ConsultScheduleController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 255BD3521FD1FC7700ACE899 /* ConsultScheduleController.swift */; };
 		255BD3551FD1FE7200ACE899 /* ScheduleTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 255BD3541FD1FE7200ACE899 /* ScheduleTabBarController.swift */; };
+		257985B41FD5C69700151C41 /* ScrollViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 257985B31FD5C69700151C41 /* ScrollViewController.swift */; };
+		257985B61FD5D50D00151C41 /* ImageZoomScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 257985B51FD5D50D00151C41 /* ImageZoomScrollView.swift */; };
+		25CD4CAE1FD72DC1007F1181 /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25CD4CAD1FD72DC1007F1181 /* Preferences.swift */; };
+		25CD4CB01FD72F12007F1181 /* PreferencesConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25CD4CAF1FD72F12007F1181 /* PreferencesConfig.swift */; };
+		25CD4CB41FD74424007F1181 /* Podfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25CD4CB31FD74424007F1181 /* Podfile.swift */; };
+		25CD4CB61FD74613007F1181 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25CD4CB51FD74613007F1181 /* LoginViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +38,12 @@
 		255BD3501FD1F36B00ACE899 /* ScheduleTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleTableViewCell.swift; sourceTree = "<group>"; };
 		255BD3521FD1FC7700ACE899 /* ConsultScheduleController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsultScheduleController.swift; sourceTree = "<group>"; };
 		255BD3541FD1FE7200ACE899 /* ScheduleTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleTabBarController.swift; sourceTree = "<group>"; };
+		257985B31FD5C69700151C41 /* ScrollViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollViewController.swift; sourceTree = "<group>"; };
+		257985B51FD5D50D00151C41 /* ImageZoomScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageZoomScrollView.swift; sourceTree = "<group>"; };
+		25CD4CAD1FD72DC1007F1181 /* Preferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preferences.swift; sourceTree = "<group>"; };
+		25CD4CAF1FD72F12007F1181 /* PreferencesConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesConfig.swift; sourceTree = "<group>"; };
+		25CD4CB31FD74424007F1181 /* Podfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Podfile.swift; sourceTree = "<group>"; };
+		25CD4CB51FD74613007F1181 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -48,6 +60,7 @@
 		255BD3221FD1BFE100ACE899 = {
 			isa = PBXGroup;
 			children = (
+				25CD4CB31FD74424007F1181 /* Podfile.swift */,
 				255BD32D1FD1BFE100ACE899 /* ReminderApp */,
 				255BD32C1FD1BFE100ACE899 /* Products */,
 			);
@@ -89,6 +102,8 @@
 			children = (
 				255BD3481FD1C47E00ACE899 /* DB.swift */,
 				255BD34A1FD1C4A900ACE899 /* Schedule.swift */,
+				25CD4CAD1FD72DC1007F1181 /* Preferences.swift */,
+				25CD4CAF1FD72F12007F1181 /* PreferencesConfig.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -107,6 +122,9 @@
 				255BD3461FD1C29D00ACE899 /* SaveScheduleController.swift */,
 				255BD3521FD1FC7700ACE899 /* ConsultScheduleController.swift */,
 				255BD3541FD1FE7200ACE899 /* ScheduleTabBarController.swift */,
+				257985B31FD5C69700151C41 /* ScrollViewController.swift */,
+				257985B51FD5D50D00151C41 /* ImageZoomScrollView.swift */,
+				25CD4CB51FD74613007F1181 /* LoginViewController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -185,11 +203,17 @@
 			files = (
 				255BD3491FD1C47E00ACE899 /* DB.swift in Sources */,
 				255BD3511FD1F36B00ACE899 /* ScheduleTableViewCell.swift in Sources */,
+				25CD4CB01FD72F12007F1181 /* PreferencesConfig.swift in Sources */,
+				25CD4CB41FD74424007F1181 /* Podfile.swift in Sources */,
+				25CD4CAE1FD72DC1007F1181 /* Preferences.swift in Sources */,
 				255BD3551FD1FE7200ACE899 /* ScheduleTabBarController.swift in Sources */,
+				257985B41FD5C69700151C41 /* ScrollViewController.swift in Sources */,
 				255BD3531FD1FC7700ACE899 /* ConsultScheduleController.swift in Sources */,
 				255BD32F1FD1BFE100ACE899 /* AppDelegate.swift in Sources */,
 				255BD34B1FD1C4A900ACE899 /* Schedule.swift in Sources */,
 				255BD3471FD1C29D00ACE899 /* SaveScheduleController.swift in Sources */,
+				25CD4CB61FD74613007F1181 /* LoginViewController.swift in Sources */,
+				257985B61FD5D50D00151C41 /* ImageZoomScrollView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

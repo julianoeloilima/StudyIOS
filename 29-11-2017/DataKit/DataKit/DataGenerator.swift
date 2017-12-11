@@ -119,8 +119,8 @@ extension UIImageView {
             //    return
             //}
             
-            guard error != nil else {
-                print(error ?? "Erro ao realizar o download da imagem: \(url).")
+            if error != nil {
+                print(error!)
                 return
             }
             
@@ -130,12 +130,7 @@ extension UIImageView {
             }
         }).resume()
         
-        
-        
-        
-        
-        guard let data = try? Data(contentsOf : url) else { return }
-        self.image = UIImage(data : data)
+
     }
 
 }

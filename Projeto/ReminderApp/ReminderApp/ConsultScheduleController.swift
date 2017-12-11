@@ -14,7 +14,21 @@ class ConsultScheduleController: UIViewController, UITableViewDelegate, UITableV
     
     @IBOutlet weak var tableSchedulers: UITableView!
     @IBOutlet weak var searchBar: UISearchBar!
-
+    @IBOutlet weak var spnTableFontSize: UISlider!
+    
+    @IBAction func txtWelcomeMsgValueChanged(_ sender: UITextField) {
+        Preferences.setStringPreference(key: PreferencesConfig.WelcomeMessage, value: sender.text!)
+    }
+    
+    @IBOutlet weak var txtWelcomeMessage: UITextField!
+    var fontSize = Preferences.getDoublePreference(key: PreferencesConfig.FontSize)
+    
+    @IBAction func spnTableFontSizeChanged(_ sender: UISlider) {
+        fontSize = Double(sender.value)
+        Preferences.setDoublePreference(key: PreferencesConfig.FontSize, value: fontSize)
+        self.tableSchedulers.reloadData()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -29,6 +43,16 @@ class ConsultScheduleController: UIViewController, UITableViewDelegate, UITableV
         self.tableSchedulers.dataSource = self
         self.searchBar.delegate = self
 //        self.tableSchedulers.setEditing(true, animated: true)
+        
+        self.tableSchedulers.estimatedRowHeight = 90
+        self.tableSchedulers.rowHeight = UITableViewAutomaticDimension
+        
+        if let msg = Preferences.getStringPreference(key: PreferencesConfig.WelcomeMessage) {
+            self.txtWelcomeMessage.text = msg
+        }
+        
+        self.spnTableFontSize.value = Float(fontSize)
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -41,6 +65,8 @@ class ConsultScheduleController: UIViewController, UITableViewDelegate, UITableV
         DB.scheduleEditing = self.schedulers[objectIndex!]
         self.tabBarController?.selectedIndex = 1
     }
+    
+    
     
 
     func willDidCellLeftSwipeGesture(cell : ScheduleTableViewCell, objectIndex: Int?) {
@@ -151,8 +177,18 @@ class ConsultScheduleController: UIViewController, UITableViewDelegate, UITableV
         else {
             cell.imgSchedule.image = #imageLiteral(resourceName: "warning")
         }
+        
+        setFontSize(label: cell.lblActive)
+        setFontSize(label: cell.lblPeriodSchedule)
+        setFontSize(label: cell.lblDescriptionSchedule)
     }
     
+    private func setFontSize(label : UILabel) {
+        //let size = Float(label.font.pointSize) * self.spnTableFontSize.value / 100.0
+        label.font = UIFont(name: label.font.fontName, size: CGFloat(fontSize))
+    }
+
+
     /*
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
