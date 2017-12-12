@@ -14,10 +14,10 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = '5690B2AED6EE402B7644CBC1877DEE73'
-               BlueprintName = 'SwiftMessages-SwiftMessages'
+               BlueprintIdentifier = '184A1650DC0B648BD756068E60BF2C59'
+               BlueprintName = 'DatePickerDialog'
                ReferencedContainer = 'container:Pods.xcodeproj'
-               BuildableName = 'SwiftMessages.bundle'>
+               BuildableName = 'DatePickerDialog.framework'>
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>

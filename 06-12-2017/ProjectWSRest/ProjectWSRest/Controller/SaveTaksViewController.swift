@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import DatePickerDialog
+import SwiftMessages
 
 class SaveTaksViewController: UIViewController {
 
@@ -15,22 +17,33 @@ class SaveTaksViewController: UIViewController {
     @IBOutlet weak var txfTitle: UITextField!
     @IBOutlet weak var txtDescription: UITextView!
     @IBOutlet weak var swtComplete: UISwitch!
-    @IBOutlet weak var dtpExpirationDate: UIDatePicker!
+    @IBOutlet weak var lblExpirationDateDesc: UILabel!
     
+    var selectedDate : Date = Date()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let formatter = DateFormatter()
+        formatter.dateFormat = "dd/MM/yyyy"
+        self.selectedDate = Date()
         
         if let t = self.task {
             txfTitle.text = t.title
             txtDescription.text = t.taskDescription!
             swtComplete.isOn = t.isComplete
+            if let dt = t.expirationDate {
+                self.selectedDate = dt
+            }
         }
         else {
             txfTitle.text = ""
             txtDescription.text = ""
             swtComplete.isOn = false
         }
+        
+        self.lblExpirationDateDesc.text = "Expira em: \(formatter.string(from: self.selectedDate))"
+
 
         // Do any additional setup after loading the view.
     }
@@ -39,22 +52,47 @@ class SaveTaksViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
+
+    @IBAction func btnSelectDate(_ sender: UIButton) {
+        DatePickerDialog(locale: Locale(identifier: "pt_BR")).show("Data", doneButtonTitle: "Ok", cancelButtonTitle: "Cancelar", datePickerMode: .date) {
+                (date) -> Void in
+            if let dt = date {
+                self.selectedDate = dt
+                let formatter = DateFormatter()
+                formatter.dateFormat = "dd/MM/yyyy"
+                self.lblExpirationDateDesc.text = "Expira em: \(formatter.string(from: dt))"
+            }
+        }
+    }
+
     private func loadData() {
         task!.isComplete = swtComplete.isOn
         task!.taskDescription = txtDescription.text
         task!.title = txfTitle.text
-        task!.expirationDate = dtpExpirationDate.date
+        task!.expirationDate = self.selectedDate
     }
     
     @IBAction func btnSaveClick(_ sender: UIButton) {
+        
+        if txfTitle.text!.count == 0 {
+            SwiftMessages.warningMessage(title: "Atenção", body: "Informe o título.")
+            return
+        }
+
+        if txtDescription.text!.count == 0 {
+            SwiftMessages.warningMessage(title: "Atenção", body: "Informe a descrição.")
+            return
+        }
+
         let msg : String
+        let back : Bool
         if task == nil {
             task = TaskEntity()
             task!.syncStatus = SyncStatus.AddServer
             loadData()
             TaskDB().insert(item: task!)
             msg = "Inserido com sucesso."
+            back = false
         }
         else {
             loadData()
@@ -63,17 +101,21 @@ class SaveTaksViewController: UIViewController {
             }
             TaskDB().update(item: task!)
             msg = "Atualizado com sucesso."
+            back = true
         }
 
         TaskSync().syncDBToService(item: task!)
 
+        SwiftMessages.successMessage(title: "Sucesso", body: msg)
+        
+        /*
         let alert = UIAlertController(title: "Sucesso",
                                       message: msg, preferredStyle: .alert)
         
         let ok = UIAlertAction(title: "ok", style: .cancel, handler: nil)
         alert.addAction(ok)
         self.present(alert, animated: true, completion: nil)
-        
+        */
 
         /*
         

@@ -16,6 +16,8 @@ class AskTableViewController: UITableViewController, UISearchResultsUpdating {
     
     lazy var resultConsult : [TaskEntity] = [TaskEntity]()
     lazy var filtered : [TaskEntity] = [TaskEntity]()
+    let formatter = DateFormatter()
+    
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return filtered.count
@@ -55,10 +57,16 @@ class AskTableViewController: UITableViewController, UISearchResultsUpdating {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "taskCellID", for: indexPath) as! TaskTableViewCell
         
+        
+        tableView.separatorStyle = UITableViewCellSeparatorStyle.none
+        
+        
         let task = self.filtered[indexPath.row]
         
         cell.lblDescription.text = task.taskDescription ?? ""
         cell.lblName.text = task.title ?? ""
+        cell.imgIsComplete.isHidden = !task.isComplete
+        cell.lblExpirationDate.text = formatter.string(from: task.expirationDate!)
 
         return cell
     }
@@ -84,6 +92,8 @@ class AskTableViewController: UITableViewController, UISearchResultsUpdating {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        formatter.dateFormat = "dd/MM/yyyy"
+
         searchController.searchResultsUpdater = self
         searchController.hidesNavigationBarDuringPresentation = false
         searchController.dimsBackgroundDuringPresentation = false
@@ -128,30 +138,6 @@ class AskTableViewController: UITableViewController, UISearchResultsUpdating {
             let ok = UIAlertAction(title: "ok", style: .cancel, handler: nil)
             alert.addAction(ok)
             self.present(alert, animated: true, completion: nil)
-            
-            /*
-            TaskService().delete(id: task.serverID!, onSuccess: { response in
-                
-                self.filtered.remove(at: indexPath.row)
-                self.tableView.reloadData()
-                
-                let alert = UIAlertController(title: "Sucesso",
-                                              message: "Excluído com sucesso.", preferredStyle: .alert)
-                let ok = UIAlertAction(title: "ok", style: .cancel, handler: nil)
-                alert.addAction(ok)
-                self.present(alert, animated: true, completion: nil)
-                
-            }, onError: { _ in
-                let alert = UIAlertController(title: "Erro",
-                                              message: "Erro ao excluir.", preferredStyle: .alert)
-                let ok = UIAlertAction(title: "ok", style: .cancel, handler: nil)
-                alert.addAction(ok)
-                self.present(alert, animated: true, completion: nil)
-            }, always: {
-                
-            })
- 
-            }*/
         }
         
         let edit = UITableViewRowAction(style: .normal, title: "Editar") { (action, indexPath) in

@@ -11,6 +11,7 @@ target 'ProjectWSRest' do
     pod 'SVPullToRefresh'
     pod 'EasyRest'
     pod 'RealmSwift'
+    pod 'DatePickerDialog'
     # Pods for network
     
 end

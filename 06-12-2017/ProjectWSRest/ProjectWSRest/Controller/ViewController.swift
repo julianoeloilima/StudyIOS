@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import Alamofire
+import SwiftMessages
 
 class ViewController: UIViewController {
 
@@ -29,29 +29,34 @@ class ViewController: UIViewController {
         userName!.text = "julianoeloilima@yahoo.com.br"
         userPass!.text = "abc123456"
 
-        LoginService().doLogin(userName: userName!.text!, userPassword: userPass!.text!,
-                               onSuccess: {
-                                response in
-                                
-            self.performSegue(withIdentifier: "goToViewTasks", sender: self)
+        if (userName!.text!.count == 0 || userPass!.text!.count == 0) {
+            SwiftMessages.warningMessage(title: "Atenção", body: "Informe o login e senha.")
+        }
+        else {
+            LoginService().doLogin(userName: userName!.text!, userPassword: userPass!.text!,
+                                   onSuccess: {
+                                    response in
+                                    
+                self.performSegue(withIdentifier: "goToViewTasks", sender: self)
 
-         
-        }, onError: { (err) in
-         
-            var errorCode = 0
-            if err != nil && err?.httpResponseCode != nil {
-                errorCode = err!.httpResponseCode!
-            }
-         
-            let alert = UIAlertController(title: "Erro",
-                                          message: "Houve algum problema \(errorCode)", preferredStyle: .alert)
-            let ok = UIAlertAction(title: "ok", style: .cancel, handler: nil)
-            alert.addAction(ok)
-            self.present(alert, animated: true, completion: nil)
-         
-        }, always: {
-            //hide loading
-        })
+             
+            }, onError: { (err) in
+             
+                var errorCode = 0
+                if err != nil && err?.httpResponseCode != nil {
+                    errorCode = err!.httpResponseCode!
+                }
+             
+                let alert = UIAlertController(title: "Erro",
+                                              message: "Houve algum problema \(errorCode)", preferredStyle: .alert)
+                let ok = UIAlertAction(title: "ok", style: .cancel, handler: nil)
+                alert.addAction(ok)
+                self.present(alert, animated: true, completion: nil)
+             
+            }, always: {
+                //hide loading
+            })
+        }
     }
     
     func getRequest() {

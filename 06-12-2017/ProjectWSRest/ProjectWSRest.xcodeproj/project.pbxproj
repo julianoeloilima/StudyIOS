@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2508F00E1FE066DB00114EA3 /* SwiftMessages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2508F00D1FE066DB00114EA3 /* SwiftMessages.swift */; };
 		2555FC811FDAF7C700463CF9 /* TaskEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2555FC801FDAF7C700463CF9 /* TaskEntity.swift */; };
 		2555FC831FDAFACB00463CF9 /* SyncDB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2555FC821FDAFACB00463CF9 /* SyncDB.swift */; };
 		2555FC851FDB02CF00463CF9 /* DB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2555FC841FDB02CF00463CF9 /* DB.swift */; };
@@ -39,6 +40,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2508F00D1FE066DB00114EA3 /* SwiftMessages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftMessages.swift; sourceTree = "<group>"; };
 		2555FC801FDAF7C700463CF9 /* TaskEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskEntity.swift; sourceTree = "<group>"; };
 		2555FC821FDAFACB00463CF9 /* SyncDB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncDB.swift; sourceTree = "<group>"; };
 		2555FC841FDB02CF00463CF9 /* DB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DB.swift; sourceTree = "<group>"; };
@@ -86,6 +88,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2508F00C1FE066C700114EA3 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				2508F00D1FE066DB00114EA3 /* SwiftMessages.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		2555FC7F1FDAF7AD00463CF9 /* Entities */ = {
 			isa = PBXGroup;
 			children = (
@@ -191,6 +201,7 @@
 		25D1A2EA1FD8A07500EC884A /* ProjectWSRest */ = {
 			isa = PBXGroup;
 			children = (
+				2508F00C1FE066C700114EA3 /* Extensions */,
 				2555FC861FDB0AC000463CF9 /* DB */,
 				2555FC7F1FDAF7AD00463CF9 /* Entities */,
 				25C427091FD9B7CB00DD3DEC /* Support Files */,
@@ -316,6 +327,7 @@
 				"${SRCROOT}/Pods/Target Support Files/Pods-ProjectWSRest/Pods-ProjectWSRest-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/BFKit-Swift/BFKit.framework",
+				"${BUILT_PRODUCTS_DIR}/DatePickerDialog/DatePickerDialog.framework",
 				"${BUILT_PRODUCTS_DIR}/EasyRest/EasyRest.framework",
 				"${BUILT_PRODUCTS_DIR}/Genome/Genome.framework",
 				"${BUILT_PRODUCTS_DIR}/IQKeyboardManagerSwift/IQKeyboardManagerSwift.framework",
@@ -328,6 +340,7 @@
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BFKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DatePickerDialog.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/EasyRest.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Genome.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IQKeyboardManagerSwift.framework",
@@ -389,6 +402,7 @@
 				25C4270F1FD9CADA00DD3DEC /* ResultConsult.swift in Sources */,
 				25C426DD1FD99EB800DD3DEC /* PostRoute.swift in Sources */,
 				25C427131FD9CCA700DD3DEC /* TaskRoute.swift in Sources */,
+				2508F00E1FE066DB00114EA3 /* SwiftMessages.swift in Sources */,
 				25C427031FD9AE5300DD3DEC /* Constants.swift in Sources */,
 				2555FC851FDB02CF00463CF9 /* DB.swift in Sources */,
 			);
