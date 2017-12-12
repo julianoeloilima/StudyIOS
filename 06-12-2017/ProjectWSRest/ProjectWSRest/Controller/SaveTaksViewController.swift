@@ -19,12 +19,12 @@ class SaveTaksViewController: UIViewController {
     @IBOutlet weak var swtComplete: UISwitch!
     @IBOutlet weak var lblExpirationDateDesc: UILabel!
     
+    let formatter = DateFormatter()
     var selectedDate : Date = Date()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let formatter = DateFormatter()
         formatter.dateFormat = "dd/MM/yyyy"
         self.selectedDate = Date()
         
@@ -35,19 +35,21 @@ class SaveTaksViewController: UIViewController {
             if let dt = t.expirationDate {
                 self.selectedDate = dt
             }
+            self.lblExpirationDateDesc.text = "Expira em: \(formatter.string(from: self.selectedDate))"
         }
         else {
-            txfTitle.text = ""
-            txtDescription.text = ""
-            swtComplete.isOn = false
+            emptyFields()
         }
-        
-        self.lblExpirationDateDesc.text = "Expira em: \(formatter.string(from: self.selectedDate))"
-
-
-        // Do any additional setup after loading the view.
     }
 
+    private func emptyFields() {
+        txfTitle.text = ""
+        txtDescription.text = ""
+        swtComplete.isOn = false
+        self.selectedDate = Date()
+        self.lblExpirationDateDesc.text = "Expira em: \(self.formatter.string(from: self.selectedDate))"
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -107,6 +109,10 @@ class SaveTaksViewController: UIViewController {
         TaskSync().syncDBToService(item: task!)
 
         SwiftMessages.successMessage(title: "Sucesso", body: msg)
+        
+        if !back {
+            emptyFields()
+        }
         
         /*
         let alert = UIAlertController(title: "Sucesso",
