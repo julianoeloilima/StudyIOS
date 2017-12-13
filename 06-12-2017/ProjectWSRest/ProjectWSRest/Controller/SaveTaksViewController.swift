@@ -93,7 +93,7 @@ class SaveTaksViewController: UIViewController {
             task!.syncStatus = SyncStatus.AddServer
             loadData()
             TaskDB().insert(item: task!)
-            msg = "Inserido com sucesso."
+            msg = "Tarefa inserida com sucesso."
             back = false
         }
         else {
@@ -102,7 +102,7 @@ class SaveTaksViewController: UIViewController {
                 task!.syncStatus = SyncStatus.UpdateServer
             }
             TaskDB().update(item: task!)
-            msg = "Atualizado com sucesso."
+            msg = "Tarefa atualizada com sucesso."
             back = true
         }
 
@@ -113,88 +113,10 @@ class SaveTaksViewController: UIViewController {
         if !back {
             emptyFields()
         }
-        
-        /*
-        let alert = UIAlertController(title: "Sucesso",
-                                      message: msg, preferredStyle: .alert)
-        
-        let ok = UIAlertAction(title: "ok", style: .cancel, handler: nil)
-        alert.addAction(ok)
-        self.present(alert, animated: true, completion: nil)
-        */
-
-        /*
-        
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd"
-        let strDate = dateFormatter.string(from: dtpExpirationDate.date)
-        
-        
-        let taskService = Task()
-        taskService.taskDescription = task!.taskDescription
-        taskService.expirationDate = strDate
-        taskService.title = task!.title
-        taskService.isComplete = task!.isComplete
-        
-        
-        if task!.syncStatus == SyncStatus.UpdateServer {
-            taskService.id = task!.serverID
-            taskDB.update(item: task!)
-            TaskService().update(task: taskService, onSuccess: { response in
-                
-                let serverID = response!.body!.id
-                
-                self.task = self.task!.clone()
-                self.task!.serverID = serverID
-                self.task!.syncStatus = SyncStatus.Syncronized
-                taskDB.update(item: self.task!)
-
-                let alert = UIAlertController(title: "Sucesso",
-                                              message: "Atualizado com sucesso.", preferredStyle: .alert)
-
-                let ok = UIAlertAction(title: "ok", style: .cancel, handler: nil)
-                alert.addAction(ok)
-                self.present(alert, animated: true, completion: nil)
-
-            }, onError: { _ in
-                let alert = UIAlertController(title: "Sucesso",
-                                              message: "Atualizado com sucesso no dispositivo. Quando estiver online seus dados serão sincronizados.", preferredStyle: .alert)
-                let ok = UIAlertAction(title: "ok", style: .cancel, handler: nil)
-                alert.addAction(ok)
-                self.present(alert, animated: true, completion: nil)
-            }, always: {
-
-            })
-            
-        }
         else {
-            taskDB.insert(item: task!)
-            taskService.id = nil
-
-            TaskService().add(task: taskService, onSuccess: { response in
-                
-                self.task = self.task!.clone()
-                self.task!.serverID = response?.body?.id
-                self.task!.syncStatus = SyncStatus.Syncronized
-                taskDB.update(item: self.task!)
-                
-                let alert = UIAlertController(title: "Sucesso",
-                                              message: "Inserido com sucesso.", preferredStyle: .alert)
-                let ok = UIAlertAction(title: "ok", style: .cancel, handler: nil)
-                alert.addAction(ok)
-                self.present(alert, animated: true, completion: nil)
-                
-            }, onError: { _ in
-                let alert = UIAlertController(title: "Sucesso",
-                                              message: "Inserido com sucesso no dispositivo. Quando estiver online seus dados serão sincronizados.", preferredStyle: .alert)
-                let ok = UIAlertAction(title: "ok", style: .cancel, handler: nil)
-                alert.addAction(ok)
-                self.present(alert, animated: true, completion: nil)
-            }, always: {
-                
-            })
+            self.navigationController?.popViewController(animated: true)
         }
- */
+        
         
     }
 

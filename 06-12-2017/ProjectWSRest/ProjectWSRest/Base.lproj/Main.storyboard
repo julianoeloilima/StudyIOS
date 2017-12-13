@@ -150,14 +150,9 @@
                             <outlet property="delegate" destination="bds-ae-tqJ" id="bjr-EC-U9n"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Tasks" id="lYG-cM-sou">
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="xEv-R2-F2G">
-                            <connections>
-                                <segue destination="vlV-eG-jv0" kind="show" id="0Pf-Ag-Lhv"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="Tasks" id="lYG-cM-sou"/>
                     <connections>
+                        <outlet property="navItems" destination="lYG-cM-sou" id="zfd-fY-kUy"/>
                         <segue destination="vlV-eG-jv0" kind="show" identifier="detailTask" id="JnE-Kv-gjW"/>
                     </connections>
                 </tableViewController>
@@ -282,6 +277,7 @@
                             </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="Z6I-X5-GzH" firstAttribute="leading" secondItem="XwP-GQ-2L4" secondAttribute="leading" constant="15" id="15z-6v-7Aw"/>
                             <constraint firstItem="Znv-G4-vAE" firstAttribute="top" secondItem="Z6I-X5-GzH" secondAttribute="bottom" constant="28" id="1fy-wF-lxi"/>
@@ -484,6 +480,13 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="oEa-aj-AzD">
                         <rect key="frame" x="0.0" y="20" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" red="0.2901960784" green="0.56470588239999997" blue="0.8862745098" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </textAttributes>
+                        <textAttributes key="largeTitleTextAttributes">
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </textAttributes>
                     </navigationBar>
                     <connections>
                         <segue destination="bds-ae-tqJ" kind="relationship" relationship="rootViewController" id="T4d-dY-x5A"/>
@@ -497,7 +500,4 @@
     <resources>
         <image name="OvalimgComplete" width="12" height="12"/>
     </resources>
-    <inferredMetricsTieBreakers>
-        <segue reference="JnE-Kv-gjW"/>
-    </inferredMetricsTieBreakers>
 </document>

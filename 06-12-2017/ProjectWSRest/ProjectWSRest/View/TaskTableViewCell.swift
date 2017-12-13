@@ -20,7 +20,7 @@ class TaskTableViewCell: UITableViewCell {
         super.awakeFromNib()
         // Initialization code
         
-        let topLineView = UIView(frame: CGRect(x: 26, y: self.bounds.size.height - 1, width: self.bounds.size.width * 10 + 26, height: 1))
+        let topLineView = UIView(frame: CGRect(x: 26, y: self.bounds.size.height - 1, width: self.bounds.size.width * 3 + 26, height: 1))
         topLineView.backgroundColor = #colorLiteral(red: 0.8469749093, green: 0.8471175432, blue: 0.8469561338, alpha: 1)
         self.addSubview(topLineView)
  

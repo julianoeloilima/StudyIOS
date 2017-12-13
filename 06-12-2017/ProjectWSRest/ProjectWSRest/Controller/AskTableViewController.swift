@@ -8,15 +8,15 @@
 
 import UIKit
 import Alamofire
+import SwiftMessages
 
-class AskTableViewController: UITableViewController, UISearchResultsUpdating {
-    
-    //var resultConsult : ResultConsult<Task>? = nil
-    let searchController = UISearchController(searchResultsController: nil)
-    
+class AskTableViewController: UITableViewController, UISearchBarDelegate {
+
+    @IBOutlet weak var navItems: UINavigationItem!
     lazy var resultConsult : [TaskEntity] = [TaskEntity]()
     lazy var filtered : [TaskEntity] = [TaskEntity]()
     let formatter = DateFormatter()
+    var titleNavigationBar : UIView?
     
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -24,33 +24,8 @@ class AskTableViewController: UITableViewController, UISearchResultsUpdating {
     }
     
     func getRequest() {
-        /*
-        TaskService().getTasks(onSuccess: { response in
-            self.resultConsult = (response?.body)!
-            if self.resultConsult != nil && self.resultConsult!.results != nil {
-                self.filtered = self.resultConsult!.results!
-            }
-            else {
-                self.filtered = [Task]()
-            }
-            
-            DispatchQueue.main.async {
-                self.tableView.reloadData()
-            }
-
-        }, onError: { _ in
-            let alert = UIAlertController(title: "Erro",
-                                          message: "Houve algum problema", preferredStyle: .alert)
-            let ok = UIAlertAction(title: "ok", style: .cancel, handler: nil)
-            alert.addAction(ok)
-            self.present(alert, animated: true, completion: nil)
-        }, always: {
-            //hide loading
-        })
-        */
-        
-        filtered = TaskDB().selectAll()
-        
+        resultConsult = TaskDB().selectAll()
+        filtered = resultConsult
         self.tableView.reloadData()
     }
 
@@ -74,6 +49,7 @@ class AskTableViewController: UITableViewController, UISearchResultsUpdating {
     private var selectedTaskForEdit : TaskEntity?
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        showAddAndSearchButtons()
         if segue.destination is SaveTaksViewController {
             if selectedTaskForEdit != nil {
                 (segue.destination as! SaveTaksViewController).task = selectedTaskForEdit!.clone()
@@ -89,15 +65,37 @@ class AskTableViewController: UITableViewController, UISearchResultsUpdating {
         selectedTaskForEdit = nil
     }
     
+    func showAddAndSearchButtons() {
+        self.navigationItem.titleView = self.titleNavigationBar
+        let btnSearch = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.search, target: self, action: #selector(showSearch))
+        btnSearch.tintColor = UIColor.white
+        let btnAdd = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.add, target: self, action: #selector(goToNewItem))
+        btnAdd.tintColor = UIColor.white
+        navItems.setRightBarButtonItems([btnAdd, btnSearch], animated: false)
+    }
+    
+    
+    @objc func goToNewItem() {
+        selectedTaskForEdit = nil
+        self.performSegue(withIdentifier: "detailTask", sender: self)
+    }
+
+    @objc func showSearch() {
+        navItems.setRightBarButtonItems([], animated: false)
+        let searchBar = UISearchBar()
+        searchBar.showsCancelButton = true
+        searchBar.placeholder = "Pesquisar"
+        searchBar.delegate = self
+        searchBar.becomeFirstResponder()
+        self.navigationItem.titleView = searchBar
+        searchBar.tintColor = UIColor.white
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         formatter.dateFormat = "dd/MM/yyyy"
-
-        searchController.searchResultsUpdater = self
-        searchController.hidesNavigationBarDuringPresentation = false
-        searchController.dimsBackgroundDuringPresentation = false
-        tableView.tableHeaderView = searchController.searchBar
+        self.titleNavigationBar = self.navigationItem.titleView
+        showAddAndSearchButtons()
     }
 
     func updateSearchResults(for searchController: UISearchController) {
@@ -132,12 +130,8 @@ class AskTableViewController: UITableViewController, UISearchResultsUpdating {
             
             self.filtered.remove(at: indexPath.row)
             self.tableView.reloadData()
-                
-            let alert = UIAlertController(title: "Sucesso",
-                                              message: "Excluído com sucesso.", preferredStyle: .alert)
-            let ok = UIAlertAction(title: "ok", style: .cancel, handler: nil)
-            alert.addAction(ok)
-            self.present(alert, animated: true, completion: nil)
+        
+            SwiftMessages.successMessage(title: "Sucesso", body: "Tarefa excluída com sucesso.")
         }
         
         let edit = UITableViewRowAction(style: .normal, title: "Editar") { (action, indexPath) in
@@ -145,7 +139,8 @@ class AskTableViewController: UITableViewController, UISearchResultsUpdating {
             self.performSegue(withIdentifier: "detailTask", sender: self)
         }
         
-        edit.backgroundColor = UIColor.blue
+        edit.backgroundColor = #colorLiteral(red: 0.1564054489, green: 0.5728738904, blue: 0.9122014046, alpha: 1)
+
         
         return [delete, edit]
     }
@@ -158,6 +153,32 @@ class AskTableViewController: UITableViewController, UISearchResultsUpdating {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        let text = searchBar.text
+        if text != nil && text!.count > 0 {
+            self.filtered = resultConsult
+            tableView.reloadData()
+        }
+        showAddAndSearchButtons()
+}
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if searchText.isEmpty {
+            self.filtered = resultConsult
+        }
+        else {
+            self.filtered = resultConsult.filter { task in
+                return task.taskDescription!.lowercased().contains(searchText.lowercased()) ||
+                    task.title!.lowercased().contains(searchText.lowercased())
+            }
+        }
+        tableView.reloadData()
     }
     
 
