@@ -112,6 +112,7 @@ class SaveTaksViewController: UIViewController {
         
         if !back {
             emptyFields()
+            task = nil
         }
         else {
             self.navigationController?.popViewController(animated: true)

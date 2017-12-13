@@ -116,6 +116,17 @@ class AskTableViewController: UITableViewController, UISearchBarDelegate {
     }
     
     
+    private func getIndexOriginalData(idTaks : String) -> Int {
+        var index = -1
+        for task in resultConsult {
+            index += 1
+            if idTaks.elementsEqual(task.id) {
+                return index
+            }
+        }
+        return -1
+    }
+    
     override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         let delete = UITableViewRowAction(style: .destructive, title: "Delete") { (action, indexPath) in
             // delete item at indexPath
@@ -129,7 +140,9 @@ class AskTableViewController: UITableViewController, UISearchBarDelegate {
             }
             
             self.filtered.remove(at: indexPath.row)
+            self.resultConsult.remove(at: self.getIndexOriginalData(idTaks: task.id))
             self.tableView.reloadData()
+            
         
             SwiftMessages.successMessage(title: "Sucesso", body: "Tarefa excluída com sucesso.")
         }
